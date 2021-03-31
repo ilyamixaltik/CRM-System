@@ -3,3 +3,9 @@ module.exports.login = (req, res) => {
         login: 'from controller'
     })
 }
+
+module.exports.register = (req, res) => {
+    res.status(200).json({
+        register: 'from controller'
+    })
+}
