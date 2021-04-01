@@ -25,14 +25,23 @@ module.exports.create = async (req, res) => {
         }).save()
 
         res.status(201).json(position)
-        
+
     } catch (err) {
         errorHandler(res, err)
     }
 }
 
-module.exports.remove = (req, res) => {
-    
+module.exports.remove = async (req, res) => {
+    try {
+        await Position.remove({ _id: req.params.id })
+
+        res.status(200).json({
+            message: 'Позиция была удалена.'
+        })
+
+    } catch (err) {
+        errorHandler(res, err)
+    }
 }
 
 module.exports.update = (req, res) => {
