@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
+const passport = require("passport")
 
 const keys = require("./config/keys")
 
@@ -14,6 +15,7 @@ mongoose.connect(keys.mongoURI)
     .then(() => console.log('MongoDB connect'))
     .catch((err) => console.log(err))
 
+app.use(passport.initialize())
 app.use(require("morgan")('dev'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
