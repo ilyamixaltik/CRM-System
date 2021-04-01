@@ -16,6 +16,8 @@ mongoose.connect(keys.mongoURI)
     .catch((err) => console.log(err))
 
 app.use(passport.initialize())
+require("./middleware/passport")(passport)
+
 app.use(require("morgan")('dev'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
