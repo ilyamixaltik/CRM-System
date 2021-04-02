@@ -37,7 +37,19 @@ module.exports.remove = async (req, res) => {
 }
 
 module.exports.create = (req, res) => {
-    
+    const category = new Category({
+        name: req.body.name,
+        user: req.user.id,
+        imageSrc: req.file ? req.file.patch : ''
+    })
+
+    try {
+        await category.save()
+        res.status(201).json(category)
+
+    } catch (err) {
+        errorHandler(res, err)
+    }
 }
 
 module.exports.update = (req, res) => {
