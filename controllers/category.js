@@ -36,7 +36,7 @@ module.exports.remove = async (req, res) => {
     }
 }
 
-module.exports.create = (req, res) => {
+module.exports.create = async (req, res) => {
     const category = new Category({
         name: req.body.name,
         user: req.user.id,
@@ -52,6 +52,23 @@ module.exports.create = (req, res) => {
     }
 }
 
-module.exports.update = (req, res) => {
-    
+module.exports.update = async (req, res) => {
+    let updated = {
+        name: req.body.name,
+    }
+
+    if(req.file){ updated.fileSrc = req.file.path }
+
+    try {
+        const category = await Category.findOneAndUpdate(
+            { _id: req.body.id },
+            { $set: updated },
+            { new: true }
+        ).save()
+
+        res.status(201).json(category)
+
+    } catch (err) {
+        errorHundler(res, err)
+    }
 }
